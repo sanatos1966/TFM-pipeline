@@ -1,0 +1,41 @@
+{
+  "ots_ia_criticas": [
+    {
+      "fecha": "2025-08-01",
+      "thd": 4.4,
+      "numero": "OT-IA-001"
+    },
+    {
+      "fecha": "2025-08-04",
+      "thd": 5.44,
+      "numero": "OT-IA-034"
+    },
+    {
+      "fecha": "2025-08-19",
+      "thd": 3.76,
+      "numero": "OT-IA-170"
+    }
+  ],
+  "ots_reales_criticas": [
+    {
+      "fecha": "2025-08-07",
+      "descripcion": "COMPRESOR 1 DE TORNILLO GEA - Corrective Action Needed"
+    },
+    {
+      "fecha": "2025-08-25",
+      "descripcion": "COMPRESOR 1 DE TORNILLO GEA - Corrective Action Needed"
+    }
+  ],
+  "correspondencias": [
+    {
+      "ia_fecha": "2025-08-01",
+      "real_fecha": "2025-08-07",
+      "anticipacion_dias": 6
+    },
+    {
+      "ia_fecha": "2025-08-19",
+      "real_fecha": "2025-08-25",
+      "anticipacion_dias": 6
+    }
+  ]
+}

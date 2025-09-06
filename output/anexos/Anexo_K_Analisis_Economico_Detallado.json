@@ -1,0 +1,34 @@
+{
+  "costos_por_severidad": {
+    "MENOR": 73766.0,
+    "ATENCI\u00d3N": 10260.0,
+    "ALERTA": 11830.0,
+    "CR\u00cdTICO": 2856.0
+  },
+  "costo_total_periodo": 98712.0,
+  "costo_mensual_promedio": 109679.99999999999,
+  "ahorro_estimado": 29613.6,
+  "roi_anual": 7.107263999999999,
+  "parametros_costos": {
+    "CR\u00cdTICO": {
+      "costo_hora": 85,
+      "horas_promedio": 8,
+      "materiales_factor": 0.4
+    },
+    "ALERTA": {
+      "costo_hora": 65,
+      "horas_promedio": 4,
+      "materiales_factor": 0.3
+    },
+    "ATENCI\u00d3N": {
+      "costo_hora": 45,
+      "horas_promedio": 2,
+      "materiales_factor": 0.2
+    },
+    "MENOR": {
+      "costo_hora": 35,
+      "horas_promedio": 1,
+      "materiales_factor": 0.1
+    }
+  }
+}

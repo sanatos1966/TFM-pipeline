@@ -1,0 +1,1 @@
+# Código del pipeline de mantenimiento predictivo\n# Clases principales: DetectorAnomalias, GeneradorOTs, PipelineMantenimiento

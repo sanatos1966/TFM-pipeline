@@ -1,0 +1,61 @@
+{
+    "project": {
+        "name": "TFM Mantenimiento Predictivo - Frío Pacífico 1",
+        "version": "1.0.0",
+        "author": "Antonio Cantos & Renzo Chavez",
+        "location": "Concepción, Chile",
+        "description": "Sistema de mantenimiento predictivo para compresores industriales usando análisis THD no-lineal"
+    },
+    "data": {
+        "total_records": 101646,
+        "expected_anomalies": 439,
+        "compressors": [
+            "Compresor1_FP1",
+            "Compresor2_FP1",
+            "Compresor3_FP1"
+        ],
+        "sensor_data_path": "data/raw/sensor/",
+        "maintenance_records_path": "data/raw/maintenance_records/OT compresores.csv",
+        "monthly_reports_path": "data/raw/reports/",
+        "supported_formats": [
+            "csv",
+            "pdf",
+            "xlsx"
+        ]
+    },
+    "features": { ... },
+    "models": { ... },
+    "maintenance": { ... },
+    "monitoring": { ... },
+
+    "procesamiento": {
+        "encoding_csv": "utf-8",
+        "separador_csv": ",",
+        "validacion_datos": true,
+        "validacion_estricta": false,
+        "limpieza_automatica": true
+    },
+
+    "deployment": {
+        "environment": "production",
+        "github_ready": true,
+        "academic_use": true,
+        "industrial_use": true,
+        "license": "MIT",
+        "python_version": ">=3.8",
+        "required_packages": [
+            "pandas>=1.5.0",
+            "numpy>=1.21.0",
+            "scikit-learn>=1.1.0",
+            "matplotlib>=3.5.0",
+            "plotly>=5.0.0",
+            "joblib>=1.1.0",
+            "openpyxl>=3.0.0",
+            "PyPDF2>=2.0.0",
+            "pdfplumber>=0.7.0",
+            "chardet>=5.0.0"
+        ]
+    },
+    "paths": { ... },
+    "logging": { ... }
+}

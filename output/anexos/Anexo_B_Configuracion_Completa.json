@@ -1,0 +1,34 @@
+{
+  "isolation_forest": {
+    "n_estimators": 200,
+    "contamination": 0.15,
+    "max_samples": "auto",
+    "max_features": 1.0,
+    "random_state": 42
+  },
+  "umbrales_severidad": {
+    "CR\u00cdTICO": "THD > 6.5",
+    "ALERTA": "THD > 2.0 OR Score < -0.4",
+    "ATENCI\u00d3N": "THD > 1.5 OR Score < -0.2",
+    "MENOR": "Resto"
+  },
+  "tiempos_respuesta": {
+    "CR\u00cdTICO": "2 horas",
+    "ALERTA": "8 horas",
+    "ATENCI\u00d3N": "24 horas",
+    "MENOR": "168 horas"
+  },
+  "variables_modelo": [
+    "THD_Corriente_A",
+    "THD_Corriente_B",
+    "THD_Corriente_C",
+    "THD_Voltaje_A",
+    "THD_Voltaje_B",
+    "THD_Voltaje_Promedio",
+    "THD_Voltaje_C",
+    "THD",
+    "Potencia_A",
+    "Potencia_B",
+    "Potencia_C"
+  ]
+}

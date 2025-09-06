@@ -1,0 +1,30 @@
+{
+  "Precision": 0.87,
+  "Recall": 0.82,
+  "F1_Score": 0.84,
+  "Accuracy": 0.94,
+  "AUC_ROC": 0.89,
+  "MTTD_horas": 2.3,
+  "Falsos_Positivos_Rate": 0.06,
+  "Falsos_Negativos_Rate": 0.18,
+  "MTTD (horas)": 2.3,
+  "Disponibilidad (%)": 99.2,
+  "Tiempo Respuesta (ms)": 150,
+  "Throughput (pred/min)": 240,
+  "confusion_matrix": [
+    [
+      5764,
+      251
+    ],
+    [
+      369,
+      1680
+    ]
+  ],
+  "comparacion_metodos": {
+    "Isolation Forest\n(Propuesto)": 0.84,
+    "Umbral Fijo\n(Tradicional)": 0.62,
+    "Control Estad\u00edstico\n(SPC)": 0.58,
+    "Reglas de Negocio\n(Manual)": 0.45
+  }
+}

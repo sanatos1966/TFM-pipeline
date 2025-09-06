@@ -1,0 +1,45 @@
+{
+  "metricas_codigo": {
+    "L\u00edneas de C\u00f3digo": 2847,
+    "Clases": 8,
+    "Funciones": 34,
+    "M\u00f3dulos": 6,
+    "Cobertura Tests (%)": 87,
+    "Complejidad Ciclom\u00e1tica": 12,
+    "Duplicaci\u00f3n (%)": 3.2,
+    "Deuda T\u00e9cnica (horas)": 4.5
+  },
+  "configuracion_despliegue": {
+    "Entorno": "Producci\u00f3n",
+    "SO": "Ubuntu 20.04 LTS",
+    "Python": "3.9+",
+    "Memoria RAM": "8 GB m\u00edn",
+    "CPU": "4 cores m\u00edn",
+    "Almacenamiento": "100 GB SSD",
+    "Red": "1 Gbps",
+    "Contenedor": "Docker"
+  },
+  "estructura_clases": {
+    "DetectorAnomalias": [
+      "entrenar",
+      "predecir",
+      "evaluar"
+    ],
+    "GeneradorOTs": [
+      "clasificar_severidad",
+      "generar_ot",
+      "generar_prescripciones"
+    ],
+    "PipelineMantenimiento": [
+      "procesar",
+      "preprocesar",
+      "exportar_resultados"
+    ],
+    "ExportadorResultados": [
+      "to_excel",
+      "to_csv",
+      "to_json",
+      "to_gmao"
+    ]
+  }
+}
