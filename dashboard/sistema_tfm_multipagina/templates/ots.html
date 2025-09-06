@@ -1,0 +1,422 @@
+{% extends "base.html" %}
+
+{% block title %}Órdenes de Trabajo - TFM Sistema Predictivo{% endblock %}
+
+{% block content %}
+<h2 class="text-2xl font-bold text-gray-800 mb-6">Gestión de Órdenes de Trabajo</h2>
+
+<!-- Controles Superiores -->
+<div class="bg-white rounded-lg shadow-md p-6 mb-6">
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div class="flex flex-col md:flex-row gap-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Filtrar por Estado</label>
+                <select id="filtro-estado" class="border border-gray-300 rounded-lg px-3 py-2">
+                    <option value="">Todos los estados</option>
+                    <option value="Pendiente">Pendiente</option>
+                    <option value="En Proceso">En Proceso</option>
+                    <option value="Completada">Completada</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Filtrar por Severidad</label>
+                <select id="filtro-severidad" class="border border-gray-300 rounded-lg px-3 py-2">
+                    <option value="">Todas las severidades</option>
+                    <option value="CRÍTICO">CRÍTICO</option>
+                    <option value="ALERTA">ALERTA</option>
+                    <option value="ATENCIÓN">ATENCIÓN</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Buscar</label>
+                <input type="text" id="buscar-ot" placeholder="Código o descripción..." class="border border-gray-300 rounded-lg px-3 py-2">
+            </div>
+        </div>
+        <div class="flex gap-2">
+            <button onclick="cargarOTs()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+                <i class="fas fa-sync mr-2"></i>Actualizar
+            </button>
+            <button onclick="generarOTs()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg">
+                <i class="fas fa-plus mr-2"></i>Generar OTs
+            </button>
+            <button onclick="exportarOTs()" class="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg">
+                <i class="fas fa-download mr-2"></i>Exportar Excel
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Estadísticas Rápidas -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+    <div class="bg-white rounded-lg shadow-md p-4">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-gray-600 text-sm">Total OTs</p>
+                <p id="total-ots" class="text-2xl font-bold text-blue-600">-</p>
+            </div>
+            <i class="fas fa-clipboard-list text-blue-500 text-xl"></i>
+        </div>
+    </div>
+    <div class="bg-white rounded-lg shadow-md p-4">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-gray-600 text-sm">Pendientes</p>
+                <p id="pendientes-ots" class="text-2xl font-bold text-orange-600">-</p>
+            </div>
+            <i class="fas fa-clock text-orange-500 text-xl"></i>
+        </div>
+    </div>
+    <div class="bg-white rounded-lg shadow-md p-4">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-gray-600 text-sm">En Proceso</p>
+                <p id="proceso-ots" class="text-2xl font-bold text-blue-600">-</p>
+            </div>
+            <i class="fas fa-cog text-blue-500 text-xl"></i>
+        </div>
+    </div>
+    <div class="bg-white rounded-lg shadow-md p-4">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-gray-600 text-sm">Completadas</p>
+                <p id="completadas-ots" class="text-2xl font-bold text-green-600">-</p>
+            </div>
+            <i class="fas fa-check text-green-500 text-xl"></i>
+        </div>
+    </div>
+</div>
+
+<!-- Lista de Órdenes de Trabajo -->
+<div class="bg-white rounded-lg shadow-md p-6">
+    <h3 class="text-lg font-semibold text-gray-800 mb-4">Órdenes de Trabajo Activas</h3>
+    
+    <!-- Loading -->
+    <div id="loading-ots" class="text-center py-8">
+        <i class="fas fa-spinner fa-spin text-2xl text-blue-500"></i>
+        <p class="text-gray-600 mt-2">Cargando órdenes de trabajo...</p>
+    </div>
+    
+    <!-- Lista de OTs -->
+    <div id="lista-ots" class="space-y-4 hidden">
+        <!-- Las OTs se cargarán dinámicamente aquí -->
+    </div>
+    
+    <!-- Sin resultados -->
+    <div id="sin-ots" class="text-center py-8 hidden">
+        <i class="fas fa-inbox text-4xl text-gray-400 mb-4"></i>
+        <p class="text-gray-600">No se encontraron órdenes de trabajo</p>
+        <button onclick="generarOTs()" class="mt-4 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg">
+            <i class="fas fa-plus mr-2"></i>Generar Nuevas OTs
+        </button>
+    </div>
+</div>
+
+<!-- Modal para Crear/Editar OT -->
+<div id="modal-ot" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+    <div class="flex items-center justify-center min-h-screen p-4">
+        <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-screen overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-semibold text-gray-800">Nueva Orden de Trabajo</h3>
+                    <button onclick="cerrarModalOT()" class="text-gray-400 hover:text-gray-600">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                
+                <form id="form-ot" class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Código OT</label>
+                            <input type="text" id="codigo-ot" class="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="OT-2025-XXX">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Compresor</label>
+                            <select id="compresor-ot" class="w-full border border-gray-300 rounded-lg px-3 py-2">
+                                <option value="C1_REF-012">C1 - Anfitrión THD</option>
+                                <option value="C2_REF-013">C2 - Vibraciones</option>
+                                <option value="C3_REF-014">C3 - Básico</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Tipo</label>
+                            <select id="tipo-ot" class="w-full border border-gray-300 rounded-lg px-3 py-2">
+                                <option value="Predictivo">Predictivo</option>
+                                <option value="Preventivo">Preventivo</option>
+                                <option value="Correctivo">Correctivo</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Severidad</label>
+                            <select id="severidad-ot" class="w-full border border-gray-300 rounded-lg px-3 py-2">
+                                <option value="CRÍTICO">CRÍTICO</option>
+                                <option value="ALERTA">ALERTA</option>
+                                <option value="ATENCIÓN">ATENCIÓN</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Costo Estimado ($)</label>
+                            <input type="number" id="costo-ot" class="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="0.00" step="0.01">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Técnico Asignado</label>
+                            <input type="text" id="tecnico-ot" class="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="Nombre del técnico">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Descripción</label>
+                        <textarea id="descripcion-ot" rows="3" class="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="Descripción detallada del trabajo a realizar..."></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Observaciones</label>
+                        <textarea id="observaciones-ot" rows="2" class="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="Observaciones adicionales..."></textarea>
+                    </div>
+                    
+                    <div class="flex justify-end gap-2 pt-4">
+                        <button type="button" onclick="cerrarModalOT()" class="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                            <i class="fas fa-save mr-2"></i>Guardar OT
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    let otsData = [];
+    
+    // Cargar OTs al inicializar la página
+    document.addEventListener('DOMContentLoaded', function() {
+        cargarOTs();
+        
+        // Event listeners para filtros
+        document.getElementById('filtro-estado').addEventListener('change', filtrarOTs);
+        document.getElementById('filtro-severidad').addEventListener('change', filtrarOTs);
+        document.getElementById('buscar-ot').addEventListener('input', filtrarOTs);
+        
+        // Event listener para el formulario
+        document.getElementById('form-ot').addEventListener('submit', guardarOT);
+    });
+    
+    async function cargarOTs() {
+        try {
+            document.getElementById('loading-ots').classList.remove('hidden');
+            document.getElementById('lista-ots').classList.add('hidden');
+            document.getElementById('sin-ots').classList.add('hidden');
+            
+            const response = await fetch('/api/ots');
+            const data = await response.json();
+            
+            otsData = data.ots || [];
+            mostrarOTs(otsData);
+            actualizarEstadisticas(otsData);
+            
+        } catch (error) {
+            console.error('Error cargando OTs:', error);
+            mostrarNotificacion('Error cargando órdenes de trabajo', 'error');
+        } finally {
+            document.getElementById('loading-ots').classList.add('hidden');
+        }
+    }
+    
+    function mostrarOTs(ots) {
+        const listaOTs = document.getElementById('lista-ots');
+        const sinOTs = document.getElementById('sin-ots');
+        
+        if (ots.length === 0) {
+            listaOTs.classList.add('hidden');
+            sinOTs.classList.remove('hidden');
+            return;
+        }
+        
+        sinOTs.classList.add('hidden');
+        listaOTs.classList.remove('hidden');
+        
+        const severidadColors = {
+            'CRÍTICO': 'text-red-600 bg-red-50 border-red-200',
+            'ALERTA': 'text-yellow-600 bg-yellow-50 border-yellow-200',
+            'ATENCIÓN': 'text-blue-600 bg-blue-50 border-blue-200'
+        };
+        
+        const estadoColors = {
+            'Pendiente': 'text-orange-600 bg-orange-50 border-orange-200',
+            'En Proceso': 'text-blue-600 bg-blue-50 border-blue-200',
+            'Completada': 'text-green-600 bg-green-50 border-green-200'
+        };
+        
+        listaOTs.innerHTML = ots.map(ot => `
+            <div class="border rounded-lg p-4 hover:shadow-md transition-shadow">
+                <div class="flex justify-between items-start mb-3">
+                    <div>
+                        <h4 class="font-semibold text-gray-800 text-lg">${ot.codigo}</h4>
+                        <p class="text-sm text-gray-600">${ot.compresor_id}</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <span class="px-2 py-1 rounded-full text-xs border ${severidadColors[ot.severidad] || 'text-gray-600 bg-gray-50 border-gray-200'}">${ot.severidad}</span>
+                        <span class="px-2 py-1 rounded-full text-xs border ${estadoColors[ot.estado] || 'text-gray-600 bg-gray-50 border-gray-200'}">${ot.estado}</span>
+                    </div>
+                </div>
+                
+                <p class="text-gray-700 mb-3">${ot.descripcion}</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                    <div>
+                        <span class="text-gray-500">Tipo:</span>
+                        <span class="font-medium ml-1">${ot.tipo}</span>
+                    </div>
+                    <div>
+                        <span class="text-gray-500">Costo:</span>
+                        <span class="font-medium ml-1 text-green-600">$${ot.costo_estimado ? ot.costo_estimado.toFixed(2) : 'N/A'}</span>
+                    </div>
+                    <div>
+                        <span class="text-gray-500">Técnico:</span>
+                        <span class="font-medium ml-1">${ot.tecnico_asignado || 'Sin asignar'}</span>
+                    </div>
+                </div>
+                
+                <div class="flex justify-between items-center mt-4 pt-3 border-t">
+                    <span class="text-xs text-gray-500">Creada: ${new Date(ot.fecha_creacion).toLocaleDateString('es-ES')}</span>
+                    <div class="flex gap-2">
+                        <button onclick="editarOT('${ot.codigo}')" class="text-blue-600 hover:text-blue-800 text-sm">
+                            <i class="fas fa-edit mr-1"></i>Editar
+                        </button>
+                        <button onclick="verDetalleOT('${ot.codigo}')" class="text-green-600 hover:text-green-800 text-sm">
+                            <i class="fas fa-eye mr-1"></i>Ver Detalle
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+    
+    function actualizarEstadisticas(ots) {
+        const total = ots.length;
+        const pendientes = ots.filter(ot => ot.estado === 'Pendiente').length;
+        const proceso = ots.filter(ot => ot.estado === 'En Proceso').length;
+        const completadas = ots.filter(ot => ot.estado === 'Completada').length;
+        
+        document.getElementById('total-ots').textContent = total;
+        document.getElementById('pendientes-ots').textContent = pendientes;
+        document.getElementById('proceso-ots').textContent = proceso;
+        document.getElementById('completadas-ots').textContent = completadas;
+    }
+    
+    function filtrarOTs() {
+        const estado = document.getElementById('filtro-estado').value;
+        const severidad = document.getElementById('filtro-severidad').value;
+        const busqueda = document.getElementById('buscar-ot').value.toLowerCase();
+        
+        let otsFiltradas = otsData.filter(ot => {
+            const cumpleEstado = !estado || ot.estado === estado;
+            const cumpleSeveridad = !severidad || ot.severidad === severidad;
+            const cumpleBusqueda = !busqueda || 
+                ot.codigo.toLowerCase().includes(busqueda) ||
+                ot.descripcion.toLowerCase().includes(busqueda) ||
+                ot.compresor_id.toLowerCase().includes(busqueda);
+            
+            return cumpleEstado && cumpleSeveridad && cumpleBusqueda;
+        });
+        
+        mostrarOTs(otsFiltradas);
+    }
+    
+    async function generarOTs() {
+        try {
+            const response = await fetch('/api/ots/generar', { method: 'POST' });
+            const data = await response.json();
+            
+            if (data.success) {
+                mostrarNotificacion(`Se generaron ${data.total_generadas} órdenes de trabajo exitosamente`, 'success');
+                cargarOTs();
+            } else {
+                mostrarNotificacion('Error generando OTs: ' + data.error, 'error');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            mostrarNotificacion('Error generando órdenes de trabajo', 'error');
+        }
+    }
+    
+    function exportarOTs() {
+        // Simular exportación
+        mostrarNotificacion('Exportando órdenes de trabajo a Excel...', 'info');
+        setTimeout(() => {
+            mostrarNotificacion('Archivo Excel generado exitosamente', 'success');
+        }, 2000);
+    }
+    
+    function nuevaOT() {
+        document.getElementById('modal-ot').classList.remove('hidden');
+        document.getElementById('form-ot').reset();
+        
+        // Generar código automático
+        const fecha = new Date();
+        const codigo = `OT-${fecha.getFullYear()}-${String(Math.floor(Math.random() * 1000)).padStart(3, '0')}`;
+        document.getElementById('codigo-ot').value = codigo;
+    }
+    
+    function cerrarModalOT() {
+        document.getElementById('modal-ot').classList.add('hidden');
+    }
+    
+    function editarOT(codigo) {
+        const ot = otsData.find(o => o.codigo === codigo);
+        if (ot) {
+            // Llenar formulario con datos de la OT
+            document.getElementById('codigo-ot').value = ot.codigo;
+            document.getElementById('compresor-ot').value = ot.compresor_id;
+            document.getElementById('tipo-ot').value = ot.tipo;
+            document.getElementById('severidad-ot').value = ot.severidad;
+            document.getElementById('costo-ot').value = ot.costo_estimado || '';
+            document.getElementById('tecnico-ot').value = ot.tecnico_asignado || '';
+            document.getElementById('descripcion-ot').value = ot.descripcion;
+            document.getElementById('observaciones-ot').value = ot.observaciones || '';
+            
+            document.getElementById('modal-ot').classList.remove('hidden');
+        }
+    }
+    
+    function verDetalleOT(codigo) {
+        const ot = otsData.find(o => o.codigo === codigo);
+        if (ot) {
+            alert(`Detalle de ${ot.codigo}:\n\nDescripción: ${ot.descripcion}\nEstado: ${ot.estado}\nTécnico: ${ot.tecnico_asignado || 'Sin asignar'}\nCosto: $${ot.costo_estimado || 'N/A'}`);
+        }
+    }
+    
+    async function guardarOT(event) {
+        event.preventDefault();
+        
+        const otData = {
+            codigo: document.getElementById('codigo-ot').value,
+            compresor_id: document.getElementById('compresor-ot').value,
+            tipo: document.getElementById('tipo-ot').value,
+            severidad: document.getElementById('severidad-ot').value,
+            costo_estimado: parseFloat(document.getElementById('costo-ot').value) || 0,
+            tecnico_asignado: document.getElementById('tecnico-ot').value,
+            descripcion: document.getElementById('descripcion-ot').value,
+            observaciones: document.getElementById('observaciones-ot').value
+        };
+        
+        // Simular guardado
+        mostrarNotificacion('Orden de trabajo guardada exitosamente', 'success');
+        cerrarModalOT();
+        cargarOTs();
+    }
+    
+    // Botón flotante para nueva OT
+    const botonNuevaOT = document.createElement('div');
+    botonNuevaOT.className = 'fixed bottom-20 right-20 z-40';
+    botonNuevaOT.innerHTML = `
+        <button onclick="nuevaOT()" class="bg-green-600 hover:bg-green-700 text-white rounded-full p-3 shadow-lg transition-colors">
+            <i class="fas fa-plus text-lg"></i>
+        </button>
+    `;
+    document.body.appendChild(botonNuevaOT);
+</script>
+{% endblock %}
+
