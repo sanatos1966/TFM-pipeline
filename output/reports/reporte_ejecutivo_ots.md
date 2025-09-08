@@ -1,5 +1,5 @@
 # 🔍 REPORTE EJECUTIVO - SISTEMA DE MANTENIMIENTO PREDICTIVO
-**Fecha:** 2025-09-06 00:02:02  
+**Fecha:** 2025-09-07 20:26:26  
 **Período Analizado:** Agosto 2025  
 **Equipo:** Compresor C-1 de Tornillo GEA  
 

@@ -1,0 +1,3 @@
+evento_id,ot_ia_numero,ot_ia_fecha,ot_ia_thd,ot_real_fecha,ot_real_equipo,ot_real_descripcion,diferencia_dias,anticipacion,distancia_temporal,ots_en_evento,escalamiento
+1,OT-FP1-20250907-0034,2025-08-01 00:00:00,5.443142857142858,2025-08-07,COMPRESOR 1 DE TORNILLO GEA,Corrective Action Needed - See Comments,6,True,6,2,True
+2,OT-FP1-20250907-0170,2025-08-19 08:06:00,3.762857142857143,2025-08-25,COMPRESOR 1 DE TORNILLO GEA,Corrective Action Needed - See Comments,5,True,5,1,False

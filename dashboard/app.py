@@ -14,6 +14,18 @@ import random
 import sqlite3
 from pathlib import Path
 
+# Volver a la raíz del proyecto
+cd ..
+
+# Agregar cambios
+git add .
+
+# Commit
+git commit -m "Integrar sistema dashboard multipágina Flask completo"
+
+# Push
+git push origin main
+
 # Configuración de la aplicación
 app = Flask(__name__)
 CORS(app)

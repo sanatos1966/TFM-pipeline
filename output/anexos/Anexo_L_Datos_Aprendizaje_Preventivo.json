@@ -1,0 +1,22 @@
+{
+  "precision_general": 82.01550387596899,
+  "precisiones_por_categoria": {
+    "Limpieza de filtros": 83.00051141512054,
+    "Lubricaci\u00f3n de rodamientos": 81.82261081709437,
+    "Ajustes de engrase": 82.39541929367594,
+    "Mantenimiento de contactores": 81.08782371426642
+  },
+  "total_ots_preventivas": "3225",
+  "ots_correlacionadas": 2645,
+  "tasa_correlacion": 82.01550387596899,
+  "mejora_precision": 1.2155038759689916,
+  "patrones_detectados": 4,
+  "evolucion_precision": {
+    "meses": [
+      "Aug"
+    ],
+    "valores": [
+      77.01550387596899
+    ]
+  }
+}

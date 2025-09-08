@@ -1,209 +1,335 @@
 # ========================================
 # SISTEMA DE MANTENIMIENTO PREDICTIVO TFM
-# Requirements.txt - Dependencias Python
+# Requirements.txt - VERSIÓN FINAL COMPLETA
+# Aplicación Flask + Chat IA + Base de Conocimiento
 # ========================================
 
-# Core Data Science
-pandas>=1.5.0
-numpy>=1.21.0
-scipy>=1.9.0
-
-# Machine Learning
-scikit-learn>=1.1.0
-joblib>=1.2.0
-
-# Data Visualization
-matplotlib>=3.5.0
-seaborn>=0.11.0
-plotly>=5.10.0
-
-# Jupyter Environment
-jupyter>=1.0.0
-notebook>=6.4.0
-ipywidgets>=7.7.0
-
-# Excel and File Processing
-openpyxl>=3.0.9
-xlrd>=2.0.1
-xlsxwriter>=3.0.3
-
-# PDF Processing
-PyPDF2>=2.10.0
-reportlab>=3.6.0
-weasyprint>=56.0
-
-# Web Framework (for dashboard)
-flask>=2.2.0
-fastapi>=0.85.0
-uvicorn>=0.18.0
-requests>=2.28.0
-
-# Database (optional)
-sqlalchemy>=1.4.0
-sqlite3  # Built-in with Python
-
-# Time Series Analysis
-statsmodels>=0.13.0
-
-# Advanced Analytics
-networkx>=2.8.0
-
-# Configuration and Environment
-python-dotenv>=0.20.0
-pyyaml>=6.0
-
-# Testing
-pytest>=7.1.0
-pytest-cov>=3.0.0
-
-# Code Quality
-black>=22.6.0
-flake8>=5.0.0
-isort>=5.10.0
-
-# Documentation
-sphinx>=5.1.0
-sphinx-rtd-theme>=1.0.0
-
-# Utilities
-tqdm>=4.64.0
-pathlib2>=2.3.7
-click>=8.1.0
-
-# Security
-cryptography>=37.0.0
-
-# API and Web Scraping
-beautifulsoup4>=4.11.0
-lxml>=4.9.0
-
-# Image Processing (for charts)
-pillow>=9.2.0
-
-# Progress Bars
-progressbar2>=4.0.0
-
-# JSON Processing
-jsonschema>=4.7.0
-
-# Date/Time Processing
-python-dateutil>=2.8.0
-pytz>=2022.1
-
-# Memory Optimization
-memory-profiler>=0.60.0
-
-# Parallel Processing
-multiprocessing-logging>=0.3.4
-
-# File System Operations
-watchdog>=2.1.9
-
-# HTTP Client
-httpx>=0.23.0
-
-# Environment Variables
-environs>=9.5.0
-
-# Logging
-loguru>=0.6.0
-
-# Data Validation
-pydantic>=1.10.0
-
-# Caching
-diskcache>=5.4.0
-
-# Compression
-gzip  # Built-in with Python
-
-# Email (for notifications)
-smtplib  # Built-in with Python
-email-validator>=1.2.0
-
-# System Information
-psutil>=5.9.0
-
-# UUID Generation
-uuid  # Built-in with Python
-
-# Regular Expressions
-re  # Built-in with Python
-
-# Operating System Interface
-os  # Built-in with Python
-sys  # Built-in with Python
-
-# Mathematical Functions
-math  # Built-in with Python
-statistics  # Built-in with Python
-
-# Random Number Generation
-random  # Built-in with Python
-
-# Collections
-collections  # Built-in with Python
-
-# Itertools
-itertools  # Built-in with Python
-
-# Functools
-functools  # Built-in with Python
-
-# Warnings
-warnings  # Built-in with Python
+# ========================================
+# APLICACIÓN WEB FLASK COMPLETA
+# ========================================
+flask==2.3.2                   # Framework web principal
+flask-cors==4.0.0               # CORS para APIs REST
+gunicorn==21.2.0                # Servidor WSGI para producción
+werkzeug==2.3.6                 # Utilidades WSGI
 
 # ========================================
-# VERSIONES ESPECÍFICAS PARA COMPATIBILIDAD
+# CORE DATA SCIENCE Y MACHINE LEARNING
 # ========================================
+pandas==1.5.3                  # Manipulación de datos
+numpy==1.24.3                  # Computación numérica
+scipy==1.10.1                  # Algoritmos científicos
+scikit-learn==1.3.0            # Machine Learning (Isolation Forest)
+joblib==1.3.1                  # Serialización de modelos
 
-# Core ML Stack (versiones probadas)
-pandas==1.5.3
-numpy==1.24.3
-scikit-learn==1.3.0
-matplotlib==3.7.1
-seaborn==0.12.2
+# ========================================
+# VISUALIZACIÓN Y GRÁFICOS
+# ========================================
+matplotlib==3.7.1              # Gráficos básicos
+seaborn==0.12.2                # Gráficos estadísticos
+plotly==5.15.0                 # Gráficos interactivos web
 
-# Jupyter Stack
-jupyter==1.0.0
-notebook==6.5.4
-ipykernel==6.23.1
+# ========================================
+# JUPYTER ENVIRONMENT
+# ========================================
+jupyter==1.0.0                 # Entorno Jupyter
+notebook==6.5.4                # Jupyter Notebook
+ipywidgets==8.0.6               # Widgets interactivos
+ipykernel==6.23.1              # Kernel de Python
 
-# Web Framework Stack
-flask==2.3.2
-fastapi==0.100.0
-uvicorn==0.22.0
+# ========================================
+# PROCESAMIENTO DE ARCHIVOS
+# ========================================
+openpyxl==3.1.2                # Archivos Excel (.xlsx)
+xlrd==2.0.1                    # Archivos Excel (.xls)
+xlsxwriter==3.1.2              # Escritura Excel optimizada
 
-# File Processing Stack
-openpyxl==3.1.2
-xlrd==2.0.1
+# ========================================
+# BASE DE DATOS
+# ========================================
+# sqlite3 incluido en Python estándar
+sqlalchemy==2.0.19             # ORM para base de datos (opcional)
+
+# ========================================
+# PROCESAMIENTO DE TEXTO Y NLP (CHAT IA)
+# ========================================
+nltk==3.8.1                    # Natural Language Toolkit
+textblob==0.17.1               # Procesamiento de texto simple
+fuzzywuzzy==0.18.0             # Búsqueda difusa de texto
+python-levenshtein==0.21.1     # Distancia de cadenas
+
+# ========================================
+# ANÁLISIS DE SERIES TEMPORALES
+# ========================================
+statsmodels==0.14.0            # Modelos estadísticos
+
+# ========================================
+# CONFIGURACIÓN Y ENTORNO
+# ========================================
+python-dotenv==1.0.0           # Variables de entorno
+pyyaml==6.0.1                  # Archivos YAML
+configparser==5.3.0            # Archivos de configuración
+
+# ========================================
+# UTILIDADES DEL SISTEMA
+# ========================================
+pathlib2==2.3.7                # Manipulación de rutas
+tqdm==4.65.0                   # Barras de progreso
+click==8.1.6                   # Interfaces de línea de comandos
+psutil==5.9.5                  # Información del sistema
+
+# ========================================
+# MANEJO DE FECHAS Y TIEMPO
+# ========================================
+python-dateutil==2.8.2         # Utilidades de fechas
+pytz==2023.3                   # Zonas horarias
+
+# ========================================
+# REQUESTS Y WEB SCRAPING
+# ========================================
+requests==2.31.0               # Cliente HTTP
+beautifulsoup4==4.12.2         # Parsing HTML
+lxml==4.9.3                    # Parser XML/HTML rápido
+
+# ========================================
+# PROCESAMIENTO DE IMÁGENES
+# ========================================
+pillow==10.0.0                 # Manipulación de imágenes
+
+# ========================================
+# LOGGING Y DEBUGGING
+# ========================================
+loguru==0.7.0                  # Sistema de logging avanzado
+
+# ========================================
+# VALIDACIÓN DE DATOS
+# ========================================
+pydantic==2.1.1                # Validación de datos
+jsonschema==4.18.4             # Validación de esquemas JSON
+
+# ========================================
+# TESTING
+# ========================================
+pytest==7.4.0                  # Framework de testing
+pytest-cov==4.1.0              # Cobertura de tests
+pytest-flask==1.2.0            # Testing para Flask
+
+# ========================================
+# CALIDAD DE CÓDIGO
+# ========================================
+black==23.7.0                  # Formateador de código
+flake8==6.0.0                  # Linter
+isort==5.12.0                  # Ordenador de imports
+
+# ========================================
+# DOCUMENTACIÓN
+# ========================================
+sphinx==7.1.2                  # Generador de documentación
+sphinx-rtd-theme==1.3.0        # Tema para documentación
+
+# ========================================
+# SEGURIDAD
+# ========================================
+cryptography==41.0.3           # Criptografía
+
+# ========================================
+# ANÁLISIS AVANZADO
+# ========================================
+networkx==3.1                  # Análisis de redes
+umap-learn==0.5.3              # Reducción de dimensionalidad
+
+# ========================================
+# OPTIMIZACIÓN DE MEMORIA
+# ========================================
+memory-profiler==0.61.0        # Profiling de memoria
+
+# ========================================
+# CACHING
+# ========================================
+diskcache==5.6.1               # Cache en disco
+
+# ========================================
+# PROCESAMIENTO PARALELO
+# ========================================
+multiprocessing-logging==0.3.4 # Logging para multiproceso
+
+# ========================================
+# MONITOREO DE ARCHIVOS
+# ========================================
+watchdog==3.0.0                # Monitoreo de cambios en archivos
+
+# ========================================
+# CLIENTE HTTP AVANZADO
+# ========================================
+httpx==0.24.1                  # Cliente HTTP asíncrono
+
+# ========================================
+# VALIDACIÓN DE EMAIL
+# ========================================
+email-validator==2.0.0         # Validación de emails
+
+# ========================================
+# DEPENDENCIAS ESPECÍFICAS PARA CHAT IA
+# ========================================
+regex==2023.6.3                # Expresiones regulares avanzadas
+unidecode==1.3.6               # Normalización de texto Unicode
+
+# ========================================
+# DEPENDENCIAS PARA ANEXOS Y REPORTES
+# ========================================
+reportlab==4.0.4               # Generación de PDFs
+weasyprint==59.0               # HTML a PDF
+markdown==3.4.4                # Procesamiento Markdown
+
+# ========================================
+# DEPENDENCIAS PARA ANÁLISIS ESTADÍSTICO
+# ========================================
+pingouin==0.5.3                # Estadísticas avanzadas
 
 # ========================================
 # INSTALACIÓN RECOMENDADA
 # ========================================
 
-# Para instalar todas las dependencias:
+# Para instalación completa:
 # pip install -r requirements.txt
 
-# Para instalar solo las dependencias core:
-# pip install pandas numpy scikit-learn matplotlib jupyter openpyxl
+# Para instalación mínima (solo aplicación web):
+# pip install flask flask-cors pandas numpy scikit-learn openpyxl joblib
 
 # Para desarrollo:
 # pip install -r requirements.txt
 # pip install pytest black flake8 isort
 
 # Para producción:
-# pip install pandas numpy scikit-learn flask openpyxl joblib
+# pip install flask flask-cors pandas numpy scikit-learn openpyxl joblib gunicorn
+
+# ========================================
+# COMANDOS DE EJECUCIÓN
+# ========================================
+
+# Ejecutar aplicación web (desarrollo):
+# cd dashboard
+# python app.py
+
+# Ejecutar aplicación web (producción):
+# cd dashboard
+# gunicorn -w 4 -b 0.0.0.0:5000 app:app
+
+# Ejecutar notebooks:
+# jupyter notebook
+
+# Ejecutar tests:
+# pytest
+
+# ========================================
+# VERIFICACIÓN DE INSTALACIÓN
+# ========================================
+
+# Verificar instalación completa:
+# python -c "import flask, pandas, sklearn, matplotlib, numpy; print('✅ Todas las dependencias principales instaladas')"
+
+# Verificar Flask específicamente:
+# python -c "import flask; print(f'Flask version: {flask.__version__}')"
+
+# Verificar chat IA:
+# python -c "import nltk, textblob; print('✅ Dependencias de chat IA instaladas')"
+
+# Verificar base de datos:
+# python -c "import sqlite3; print('✅ SQLite disponible')"
 
 # ========================================
 # NOTAS DE COMPATIBILIDAD
 # ========================================
 
 # Python 3.9+ requerido
+# Flask 2.3+ para aplicación web multipágina
 # Jupyter Notebook recomendado para análisis interactivo
-# Flask para dashboard web (opcional)
+# SQLite incluido en Python estándar
 # Todas las versiones probadas en Windows 10/11 y Ubuntu 20.04+
 
 # Para sistemas con recursos limitados, instalar solo:
-# pandas, numpy, scikit-learn, matplotlib, openpyxl, jupyter
+# flask, flask-cors, pandas, numpy, scikit-learn, openpyxl, jupyter
+
+# ========================================
+# DEPENDENCIAS OPCIONALES
+# ========================================
+
+# Para análisis avanzado de texto (chat IA mejorado):
+# transformers==4.31.0
+# torch==2.0.1
+
+# Para visualizaciones avanzadas:
+# bokeh==3.2.1
+# altair==5.0.1
+
+# Para integración con bases de datos externas:
+# psycopg2-binary==2.9.7  # PostgreSQL
+# pymongo==4.4.1          # MongoDB
+
+# ========================================
+# ESTRUCTURA DE DEPENDENCIAS
+# ========================================
+
+# CORE (obligatorias):
+# flask, pandas, numpy, scikit-learn, openpyxl
+
+# WEB (aplicación web):
+# flask-cors, gunicorn, werkzeug
+
+# ANÁLISIS (notebooks):
+# jupyter, matplotlib, seaborn
+
+# CHAT IA (inteligencia):
+# nltk, textblob, fuzzywuzzy
+
+# TESTING (desarrollo):
+# pytest, pytest-flask, pytest-cov
+
+# PRODUCCIÓN (despliegue):
+# gunicorn, python-dotenv, loguru
+
+# ========================================
+# COMANDOS DE INSTALACIÓN POR CATEGORÍA
+# ========================================
+
+# Solo aplicación web:
+# pip install flask flask-cors pandas numpy scikit-learn openpyxl joblib gunicorn
+
+# Solo notebooks:
+# pip install jupyter pandas numpy scikit-learn matplotlib seaborn openpyxl
+
+# Solo chat IA:
+# pip install flask flask-cors pandas nltk textblob fuzzywuzzy
+
+# Desarrollo completo:
+# pip install -r requirements.txt
+
+# ========================================
+# TROUBLESHOOTING
+# ========================================
+
+# Si hay problemas con instalación:
+# pip install --upgrade pip setuptools wheel
+# pip install -r requirements.txt --no-cache-dir
+
+# Para sistemas Windows:
+# pip install --only-binary=all -r requirements.txt
+
+# Para sistemas Linux/Mac:
+# pip3 install -r requirements.txt
+
+# Si falla alguna dependencia específica:
+# pip install --force-reinstall <package_name>
+
+# ========================================
+# INFORMACIÓN ADICIONAL
+# ========================================
+
+# Total de dependencias: 50+
+# Tamaño estimado de instalación: ~2GB
+# Tiempo de instalación: 5-15 minutos
+# Compatibilidad: Python 3.9, 3.10, 3.11
+# Sistemas operativos: Windows, Linux, macOS
+
+# Última actualización: Septiembre 2025
+# Versión del sistema: TFM v3.0 Completo
 

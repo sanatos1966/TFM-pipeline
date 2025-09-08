@@ -1,0 +1,10 @@
+{
+  "ots_ia_criticas": 3,
+  "ots_reales_criticas": 2,
+  "correspondencias_exitosas": 2,
+  "precision": 0.6666666666666666,
+  "recall": 1.0,
+  "f1_score": 0.8,
+  "cobertura": 1.0,
+  "anticipacion_promedio_dias": 5.5
+}
