@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+
+{% block title %}Análisis de Compresores - TFM Sistema Predictivo{% endblock %}
+
+{% block content %}
+<h2 class="text-2xl font-bold text-gray-800 mb-6">Análisis de Compresores</h2>
+
+<!-- Resumen de Compresores -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    {% for compresor in compresores %}
+    <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+        <div class="flex items-center justify-between mb-4">
+            <div>
+                <h3 class="text-lg font-bold text-gray-800">{{ compresor.nombre }}</h3>
+                <p class="text-sm text-gray-500">{{ compresor.id }}</p>
+            </div>
+            <div class="text-2xl">
+                {% if compresor.estado == 'Operativo' %}
+                <span class="text-green-500">&#10003;</span>
+                {% else %}
+                <span class="text-red-500">&#10007;</span>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="space-y-2">
+            <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Tipo:</span>
+                <span class="font-semibold">{{ compresor.tipo }}</span>
+            </div>
+            <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Variables:</span>
+                <span class="font-semibold">{{ compresor.variables_monitoreadas }}</span>
+            </div>
+            <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Estado:</span>
+                <span class="font-semibold text-green-600">{{ compresor.estado }}</span>
+            </div>
+        </div>
+        
+        <div class="mt-4 pt-4 border-t">
+            <button onclick="verDetalles('{{ compresor.id }}')" class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg transition-colors">
+                Ver Detalles
+            </button>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Gráficos de Variables por Compresor -->
+<div class="bg-white rounded-lg shadow-md p-6 mb-8">
+    <h3 class="text-xl font-bold text-gray-800 mb-4">
+        <i class="fas fa-chart-line text-blue-500 mr-2"></i>
+        Monitoreo de Variables
+    </h3>
+    
+    <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700 mb-2">Seleccionar Compresor:</label>
+        <select id="compresorSelect" class="w-full md:w-64 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+            {% for compresor in compresores %}
+            <option value="{{ compresor.id }}">{{ compresor.nombre }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    
+    <div id="graficoVariables" class="h-96"></div>
+</div>
+
+<!-- Tabla de Variables Monitoreadas -->
+<div class="bg-white rounded-lg shadow-md p-6">
+    <h3 class="text-xl font-bold text-gray-800 mb-4">
+        <i class="fas fa-table text-green-500 mr-2"></i>
+        Variables Monitoreadas por Compresor
+    </h3>
+    
+    <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Compresor</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipo</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Variables</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                {% for compresor in compresores %}
+                <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm font-medium text-gray-900">{{ compresor.nombre }}</div>
+                        <div class="text-sm text-gray-500">{{ compresor.id }}</div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="text-sm text-gray-900">{{ compresor.tipo }}</div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="text-sm text-gray-900">{{ compresor.variables_monitoreadas }} variables</div>
+                        <div class="text-xs text-gray-500">
+                            {% if compresor.tipos_variables %}
+                            {{ compresor.tipos_variables[:3]|join(', ') }}...
+                            {% endif %}
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                            {{ compresor.estado }}
+                        </span>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Datos simulados para gráficos
+    function generarGraficoVariables(compresorId) {
+        const timestamps = [];
+        const valores = [];
+        
+        // Generar datos simulados
+        for (let i = 0; i < 24; i++) {
+            const fecha = new Date();
+            fecha.setHours(fecha.getHours() - (24 - i));
+            timestamps.push(fecha.toISOString());
+            valores.push(Math.random() * 100 + 50);
+        }
+        
+        const trace = {
+            x: timestamps,
+            y: valores,
+            type: 'scatter',
+            mode: 'lines+markers',
+            name: 'Variable Principal',
+            line: { color: '#3b82f6', width: 2 },
+            marker: { size: 6 }
+        };
+        
+        const layout = {
+            title: 'Evolución de Variables - Últimas 24 Horas',
+            xaxis: { title: 'Tiempo' },
+            yaxis: { title: 'Valor' },
+            hovermode: 'closest'
+        };
+        
+        Plotly.newPlot('graficoVariables', [trace], layout, {responsive: true});
+    }
+    
+    function verDetalles(compresorId) {
+        mostrarNotificacion('Mostrando detalles de ' + compresorId, 'info');
+        generarGraficoVariables(compresorId);
+    }
+    
+    // Inicialización
+    document.addEventListener('DOMContentLoaded', function() {
+        generarGraficoVariables('C1_REF-012');
+        
+        document.getElementById('compresorSelect').addEventListener('change', function(e) {
+            generarGraficoVariables(e.target.value);
+        });
+    });
+</script>
+{% endblock %}
+

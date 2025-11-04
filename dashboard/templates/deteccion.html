@@ -1,0 +1,244 @@
+{% extends "base.html" %}
+
+{% block title %}Detección Avanzada - TFM Sistema Predictivo{% endblock %}
+
+{% block content %}
+<h2 class="text-2xl font-bold text-gray-800 mb-6">Detección Avanzada de Anomalías</h2>
+
+<!-- Resumen de Detecciones -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-gray-600 text-sm">Anomalías Detectadas</p>
+                <p class="text-3xl font-bold text-red-600">3</p>
+                <p class="text-xs text-gray-500">Últimas 24h</p>
+            </div>
+            <i class="fas fa-exclamation-triangle text-red-500 text-2xl"></i>
+        </div>
+    </div>
+    
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-gray-600 text-sm">Confianza Promedio</p>
+                <p class="text-3xl font-bold text-green-600">95.2%</p>
+                <p class="text-xs text-gray-500">Modelo Ensemble</p>
+            </div>
+            <i class="fas fa-brain text-green-500 text-2xl"></i>
+        </div>
+    </div>
+    
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-gray-600 text-sm">Anticipación</p>
+                <p class="text-3xl font-bold text-blue-600">15</p>
+                <p class="text-xs text-gray-500">días promedio</p>
+            </div>
+            <i class="fas fa-clock text-blue-500 text-2xl"></i>
+        </div>
+    </div>
+    
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-gray-600 text-sm">Precisión Global</p>
+                <p class="text-3xl font-bold text-purple-600">100%</p>
+                <p class="text-xs text-gray-500">Validado C1</p>
+            </div>
+            <i class="fas fa-check-circle text-purple-500 text-2xl"></i>
+        </div>
+    </div>
+</div>
+
+<!-- Modelo de Detección -->
+<div class="bg-white rounded-lg shadow-md p-6 mb-8">
+    <h3 class="text-xl font-bold text-gray-800 mb-4">
+        <i class="fas fa-cogs text-purple-500 mr-2"></i>
+        Configuración del Modelo Ensemble
+    </h3>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="p-4 bg-blue-50 rounded-lg">
+            <h4 class="font-semibold text-gray-800 mb-2">Isolation Forest</h4>
+            <div class="space-y-1 text-sm">
+                <div class="flex justify-between">
+                    <span class="text-gray-600">Estimadores:</span>
+                    <span class="font-semibold">100</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-600">Contaminación:</span>
+                    <span class="font-semibold">0.1</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-600">Random State:</span>
+                    <span class="font-semibold">42</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="p-4 bg-green-50 rounded-lg">
+            <h4 class="font-semibold text-gray-800 mb-2">DBSCAN</h4>
+            <div class="space-y-1 text-sm">
+                <div class="flex justify-between">
+                    <span class="text-gray-600">Epsilon:</span>
+                    <span class="font-semibold">0.5</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-600">Min Samples:</span>
+                    <span class="font-semibold">5</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-600">Métrica:</span>
+                    <span class="font-semibold">Euclidean</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Gráfico de Anomalías -->
+<div class="bg-white rounded-lg shadow-md p-6 mb-8">
+    <h3 class="text-xl font-bold text-gray-800 mb-4">
+        <i class="fas fa-chart-area text-red-500 mr-2"></i>
+        Detección de Anomalías en Tiempo Real
+    </h3>
+    
+    <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700 mb-2">Variable a Monitorear:</label>
+        <select id="variableSelect" class="w-full md:w-64 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+            <option value="thd">THD Total</option>
+            <option value="potencia">Potencia Activa</option>
+            <option value="temperatura">Temperatura</option>
+            <option value="vibracion">Vibración</option>
+        </select>
+    </div>
+    
+    <div id="graficoAnomalias" class="h-96"></div>
+</div>
+
+<!-- Tabla de Anomalías Recientes -->
+<div class="bg-white rounded-lg shadow-md p-6">
+    <h3 class="text-xl font-bold text-gray-800 mb-4">
+        <i class="fas fa-list text-orange-500 mr-2"></i>
+        Anomalías Detectadas Recientemente
+    </h3>
+    
+    <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha/Hora</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Compresor</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Variable</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Severidad</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Confianza</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">2025-10-14 10:30</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">C1_REF-012</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">THD_Voltaje_A</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">CRÍTICO</span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">97.8%</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">En Análisis</span>
+                    </td>
+                </tr>
+                <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">2025-10-14 08:15</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">C2_REF-013</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Vibracion_X</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-orange-100 text-orange-800">ALERTA</span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">92.1%</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Resuelto</span>
+                    </td>
+                </tr>
+                <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">2025-10-13 16:45</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">C1_REF-012</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Potencia_Activa</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">ATENCIÓN</span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">88.5%</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Resuelto</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function generarGraficoAnomalias() {
+        const timestamps = [];
+        const valores = [];
+        const anomalias = [];
+        
+        // Generar datos simulados
+        for (let i = 0; i < 100; i++) {
+            const fecha = new Date();
+            fecha.setHours(fecha.getHours() - (100 - i));
+            timestamps.push(fecha.toISOString());
+            
+            const valor = Math.sin(i / 10) * 30 + 70 + Math.random() * 10;
+            valores.push(valor);
+            
+            // Simular anomalías
+            if (Math.random() > 0.95) {
+                anomalias.push({x: fecha.toISOString(), y: valor});
+            }
+        }
+        
+        const traceNormal = {
+            x: timestamps,
+            y: valores,
+            type: 'scatter',
+            mode: 'lines',
+            name: 'Valores Normales',
+            line: { color: '#3b82f6', width: 2 }
+        };
+        
+        const traceAnomalias = {
+            x: anomalias.map(a => a.x),
+            y: anomalias.map(a => a.y),
+            type: 'scatter',
+            mode: 'markers',
+            name: 'Anomalías Detectadas',
+            marker: { color: '#ef4444', size: 10, symbol: 'x' }
+        };
+        
+        const layout = {
+            title: 'Detección de Anomalías - Últimas 100 Horas',
+            xaxis: { title: 'Tiempo' },
+            yaxis: { title: 'Valor' },
+            hovermode: 'closest'
+        };
+        
+        Plotly.newPlot('graficoAnomalias', [traceNormal, traceAnomalias], layout, {responsive: true});
+    }
+    
+    // Inicialización
+    document.addEventListener('DOMContentLoaded', function() {
+        generarGraficoAnomalias();
+        
+        document.getElementById('variableSelect').addEventListener('change', function() {
+            generarGraficoAnomalias();
+        });
+    });
+</script>
+{% endblock %}
+

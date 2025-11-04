@@ -1,0 +1,236 @@
+{% extends "base.html" %}
+
+{% block title %}Análisis Económico - TFM Sistema Predictivo{% endblock %}
+
+{% block content %}
+<h2 class="text-2xl font-bold text-gray-800 mb-6">Análisis Económico y ROI</h2>
+
+<!-- KPIs Económicos -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-gray-600 text-sm">Costo Total 2025</p>
+                <p class="text-3xl font-bold text-red-600">${{ "%.2f"|format(kpis.costo_total_2025) }}</p>
+                <p class="text-xs text-gray-500">Ene-Ago 2025</p>
+            </div>
+            <i class="fas fa-dollar-sign text-red-500 text-2xl"></i>
+        </div>
+    </div>
+    
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-gray-600 text-sm">Ahorro Estimado</p>
+                <p class="text-3xl font-bold text-green-600">${{ "%.2f"|format(kpis.ahorro_estimado) }}</p>
+                <p class="text-xs text-gray-500">Con sistema predictivo</p>
+            </div>
+            <i class="fas fa-piggy-bank text-green-500 text-2xl"></i>
+        </div>
+    </div>
+    
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-gray-600 text-sm">ROI Primer Año</p>
+                <p class="text-3xl font-bold text-blue-600">{{ "%.1f"|format(kpis.roi_primer_año) }}%</p>
+                <p class="text-xs text-gray-500">Retorno inversión</p>
+            </div>
+            <i class="fas fa-chart-line text-blue-500 text-2xl"></i>
+        </div>
+    </div>
+    
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-gray-600 text-sm">Reducción Costos</p>
+                <p class="text-3xl font-bold text-purple-600">{{ "%.0f"|format(kpis.reduccion_costos_porcentaje) }}%</p>
+                <p class="text-xs text-gray-500">vs mantenimiento reactivo</p>
+            </div>
+            <i class="fas fa-arrow-down text-purple-500 text-2xl"></i>
+        </div>
+    </div>
+</div>
+
+<!-- Desglose de Costos -->
+<div class="bg-white rounded-lg shadow-md p-6 mb-8">
+    <h3 class="text-xl font-bold text-gray-800 mb-4">
+        <i class="fas fa-chart-pie text-blue-500 mr-2"></i>
+        Desglose de Costos de Mantenimiento 2025
+    </h3>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+            <div id="graficoCostos" class="h-96"></div>
+        </div>
+        
+        <div class="space-y-4">
+            <div class="p-4 bg-red-50 rounded-lg">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="font-semibold text-gray-800">Mantenimiento Correctivo</span>
+                    <span class="text-red-600 font-bold">$18,450.00</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div class="bg-red-600 h-2 rounded-full" style="width: 72%"></div>
+                </div>
+                <p class="text-xs text-gray-500 mt-1">72% del total</p>
+            </div>
+            
+            <div class="p-4 bg-orange-50 rounded-lg">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="font-semibold text-gray-800">Mantenimiento Preventivo</span>
+                    <span class="text-orange-600 font-bold">$5,120.00</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div class="bg-orange-600 h-2 rounded-full" style="width: 20%"></div>
+                </div>
+                <p class="text-xs text-gray-500 mt-1">20% del total</p>
+            </div>
+            
+            <div class="p-4 bg-blue-50 rounded-lg">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="font-semibold text-gray-800">Paradas no Planificadas</span>
+                    <span class="text-blue-600 font-bold">$2,037.38</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div class="bg-blue-600 h-2 rounded-full" style="width: 8%"></div>
+                </div>
+                <p class="text-xs text-gray-500 mt-1">8% del total</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Proyección de Ahorros -->
+<div class="bg-white rounded-lg shadow-md p-6 mb-8">
+    <h3 class="text-xl font-bold text-gray-800 mb-4">
+        <i class="fas fa-chart-bar text-green-500 mr-2"></i>
+        Proyección de Ahorros con Sistema Predictivo
+    </h3>
+    
+    <div id="graficoAhorros" class="h-96"></div>
+</div>
+
+<!-- Análisis de ROI -->
+<div class="bg-white rounded-lg shadow-md p-6">
+    <h3 class="text-xl font-bold text-gray-800 mb-4">
+        <i class="fas fa-calculator text-purple-500 mr-2"></i>
+        Análisis de Retorno de Inversión (ROI)
+    </h3>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="space-y-4">
+            <h4 class="font-semibold text-gray-800">Inversión Inicial</h4>
+            <div class="space-y-2">
+                <div class="flex justify-between p-2 bg-gray-50 rounded">
+                    <span class="text-gray-600">Hardware y Sensores:</span>
+                    <span class="font-semibold">$8,500.00</span>
+                </div>
+                <div class="flex justify-between p-2 bg-gray-50 rounded">
+                    <span class="text-gray-600">Software y Licencias:</span>
+                    <span class="font-semibold">$3,200.00</span>
+                </div>
+                <div class="flex justify-between p-2 bg-gray-50 rounded">
+                    <span class="text-gray-600">Implementación:</span>
+                    <span class="font-semibold">$2,800.00</span>
+                </div>
+                <div class="flex justify-between p-2 bg-gray-50 rounded">
+                    <span class="text-gray-600">Capacitación:</span>
+                    <span class="font-semibold">$1,500.00</span>
+                </div>
+                <div class="flex justify-between p-3 bg-blue-100 rounded font-bold">
+                    <span class="text-gray-800">Total Inversión:</span>
+                    <span class="text-blue-600">$16,000.00</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="space-y-4">
+            <h4 class="font-semibold text-gray-800">Beneficios Anuales</h4>
+            <div class="space-y-2">
+                <div class="flex justify-between p-2 bg-gray-50 rounded">
+                    <span class="text-gray-600">Reducción Correctivos:</span>
+                    <span class="font-semibold text-green-600">$5,535.00</span>
+                </div>
+                <div class="flex justify-between p-2 bg-gray-50 rounded">
+                    <span class="text-gray-600">Reducción Paradas:</span>
+                    <span class="font-semibold text-green-600">$1,530.00</span>
+                </div>
+                <div class="flex justify-between p-2 bg-gray-50 rounded">
+                    <span class="text-gray-600">Aumento Disponibilidad:</span>
+                    <span class="font-semibold text-green-600">$617.21</span>
+                </div>
+                <div class="flex justify-between p-3 bg-green-100 rounded font-bold">
+                    <span class="text-gray-800">Total Beneficios:</span>
+                    <span class="text-green-600">$7,682.21</span>
+                </div>
+                <div class="flex justify-between p-3 bg-purple-100 rounded font-bold">
+                    <span class="text-gray-800">Periodo Recuperación:</span>
+                    <span class="text-purple-600">2.1 años</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="mt-6 p-4 bg-green-100 rounded-lg">
+        <p class="text-green-800 font-semibold text-center">
+            ROI a 5 años: 140.3% | Ahorro total proyectado: $38,411.05
+        </p>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Gráfico de costos
+    const dataCostos = [{
+        values: [18450, 5120, 2037.38],
+        labels: ['Correctivo', 'Preventivo', 'Paradas'],
+        type: 'pie',
+        marker: {
+            colors: ['#ef4444', '#f97316', '#3b82f6']
+        }
+    }];
+    
+    const layoutCostos = {
+        title: 'Distribución de Costos',
+        height: 400
+    };
+    
+    Plotly.newPlot('graficoCostos', dataCostos, layoutCostos, {responsive: true});
+    
+    // Gráfico de proyección de ahorros
+    const meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+    const costosSinSistema = [3200, 3150, 3400, 3100, 3250, 3300, 3450, 3200, 3350, 3280, 3150, 3300];
+    const costosConSistema = [2240, 2205, 2380, 2170, 2275, 2310, 2415, 2240, 2345, 2296, 2205, 2310];
+    
+    const traceActual = {
+        x: meses,
+        y: costosSinSistema,
+        type: 'scatter',
+        mode: 'lines+markers',
+        name: 'Sin Sistema Predictivo',
+        line: { color: '#ef4444', width: 2 }
+    };
+    
+    const tracePredictivo = {
+        x: meses,
+        y: costosConSistema,
+        type: 'scatter',
+        mode: 'lines+markers',
+        name: 'Con Sistema Predictivo',
+        line: { color: '#22c55e', width: 2 }
+    };
+    
+    const layoutAhorros = {
+        title: 'Comparación de Costos Mensuales',
+        xaxis: { title: 'Mes' },
+        yaxis: { title: 'Costo ($)' },
+        hovermode: 'closest'
+    };
+    
+    Plotly.newPlot('graficoAhorros', [traceActual, tracePredictivo], layoutAhorros, {responsive: true});
+</script>
+{% endblock %}
+

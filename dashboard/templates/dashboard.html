@@ -23,7 +23,7 @@
             <div>
                 <p class="text-gray-600 text-sm">ROI Primer Año</p>
                 <p class="text-3xl font-bold text-blue-600">{{ "%.1f"|format(kpis.roi_primer_año) }}%</p>
-                <p class="text-xs text-blue-500">💰 ${{ "{:,.0f}"|format(kpis.ahorro_estimado) }} ahorro</p>
+               <p class="text-xs text-blue-500">💰 ${{ kpis.ahorro_estimado|round|int }} ahorro</p>
             </div>
             <i class="fas fa-chart-line text-blue-500 text-2xl"></i>
         </div>

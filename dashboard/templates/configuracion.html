@@ -1,0 +1,283 @@
+{% extends "base.html" %}
+
+{% block title %}Configuración - TFM Sistema Predictivo{% endblock %}
+
+{% block content %}
+<h2 class="text-2xl font-bold text-gray-800 mb-6">Configuración del Sistema</h2>
+
+<!-- Configuración General -->
+<div class="bg-white rounded-lg shadow-md p-6 mb-8">
+    <h3 class="text-xl font-bold text-gray-800 mb-4">
+        <i class="fas fa-cog text-gray-500 mr-2"></i>
+        Configuración General
+    </h3>
+    
+    <div class="space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Nombre del Sistema:</label>
+                <input type="text" value="TFM - Sistema Predictivo Frío Pacífico 1" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Institución:</label>
+                <input type="text" value="Frío Pacífico 1" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+            </div>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Zona Horaria:</label>
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <option>UTC-5 (Perú)</option>
+                    <option>UTC-6 (México)</option>
+                    <option>UTC-3 (Argentina)</option>
+                </select>
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Idioma:</label>
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <option>Español</option>
+                    <option>English</option>
+                    <option>Português</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Configuración de Alertas -->
+<div class="bg-white rounded-lg shadow-md p-6 mb-8">
+    <h3 class="text-xl font-bold text-gray-800 mb-4">
+        <i class="fas fa-bell text-yellow-500 mr-2"></i>
+        Configuración de Alertas
+    </h3>
+    
+    <div class="space-y-4">
+        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+            <div>
+                <h4 class="font-semibold text-gray-800">Alertas por Email</h4>
+                <p class="text-sm text-gray-500">Recibir notificaciones de anomalías por correo</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" checked class="sr-only peer">
+                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+            </label>
+        </div>
+        
+        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+            <div>
+                <h4 class="font-semibold text-gray-800">Alertas Push</h4>
+                <p class="text-sm text-gray-500">Notificaciones push en el navegador</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" checked class="sr-only peer">
+                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+            </label>
+        </div>
+        
+        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+            <div>
+                <h4 class="font-semibold text-gray-800">Alertas SMS</h4>
+                <p class="text-sm text-gray-500">Mensajes de texto para alertas críticas</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" class="sr-only peer">
+                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+            </label>
+        </div>
+        
+        <div class="mt-4">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Emails para Alertas:</label>
+            <input type="email" placeholder="ejemplo@empresa.com" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+            <p class="text-xs text-gray-500 mt-1">Separar múltiples emails con comas</p>
+        </div>
+    </div>
+</div>
+
+<!-- Configuración del Modelo -->
+<div class="bg-white rounded-lg shadow-md p-6 mb-8">
+    <h3 class="text-xl font-bold text-gray-800 mb-4">
+        <i class="fas fa-brain text-purple-500 mr-2"></i>
+        Configuración del Modelo Predictivo
+    </h3>
+    
+    <div class="space-y-6">
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Umbral de Confianza:</label>
+            <input type="range" min="0" max="100" value="85" class="w-full">
+            <div class="flex justify-between text-xs text-gray-500 mt-1">
+                <span>0%</span>
+                <span class="font-semibold text-blue-600">85%</span>
+                <span>100%</span>
+            </div>
+        </div>
+        
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Ventana de Predicción:</label>
+            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                <option>24 horas</option>
+                <option>48 horas</option>
+                <option selected>72 horas</option>
+                <option>7 días</option>
+                <option>14 días</option>
+            </select>
+        </div>
+        
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Frecuencia de Reentrenamiento:</label>
+            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                <option>Diario</option>
+                <option selected>Semanal</option>
+                <option>Quincenal</option>
+                <option>Mensual</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<!-- Configuración de Compresores -->
+<div class="bg-white rounded-lg shadow-md p-6 mb-8">
+    <h3 class="text-xl font-bold text-gray-800 mb-4">
+        <i class="fas fa-cogs text-blue-500 mr-2"></i>
+        Configuración de Compresores
+    </h3>
+    
+    <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Compresor</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Monitoreo</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Variables</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Acciones</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm font-medium text-gray-900">C1 - Anfitrión THD</div>
+                        <div class="text-sm text-gray-500">C1_REF-012</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" checked class="sr-only peer">
+                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                        </label>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">12 variables</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                        <button class="text-blue-600 hover:text-blue-900">
+                            <i class="fas fa-edit"></i> Editar
+                        </button>
+                    </td>
+                </tr>
+                <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm font-medium text-gray-900">C2 - Vibraciones</div>
+                        <div class="text-sm text-gray-500">C2_REF-013</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" checked class="sr-only peer">
+                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                        </label>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">15 variables</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                        <button class="text-blue-600 hover:text-blue-900">
+                            <i class="fas fa-edit"></i> Editar
+                        </button>
+                    </td>
+                </tr>
+                <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm font-medium text-gray-900">C3 - Básico</div>
+                        <div class="text-sm text-gray-500">C3_REF-014</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" checked class="sr-only peer">
+                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                        </label>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">8 variables</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                        <button class="text-blue-600 hover:text-blue-900">
+                            <i class="fas fa-edit"></i> Editar
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Información del Sistema -->
+<div class="bg-white rounded-lg shadow-md p-6">
+    <h3 class="text-xl font-bold text-gray-800 mb-4">
+        <i class="fas fa-info-circle text-blue-500 mr-2"></i>
+        Información del Sistema
+    </h3>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="space-y-2">
+            <div class="flex justify-between p-2 bg-gray-50 rounded">
+                <span class="text-gray-600">Versión del Sistema:</span>
+                <span class="font-semibold">1.0.0</span>
+            </div>
+            <div class="flex justify-between p-2 bg-gray-50 rounded">
+                <span class="text-gray-600">Última Actualización:</span>
+                <span class="font-semibold">2025-10-14</span>
+            </div>
+            <div class="flex justify-between p-2 bg-gray-50 rounded">
+                <span class="text-gray-600">Base de Datos:</span>
+                <span class="font-semibold">SQLite 3.40</span>
+            </div>
+        </div>
+        
+        <div class="space-y-2">
+            <div class="flex justify-between p-2 bg-gray-50 rounded">
+                <span class="text-gray-600">Registros Totales:</span>
+                <span class="font-semibold">1,247,893</span>
+            </div>
+            <div class="flex justify-between p-2 bg-gray-50 rounded">
+                <span class="text-gray-600">Espacio Utilizado:</span>
+                <span class="font-semibold">245 MB</span>
+            </div>
+            <div class="flex justify-between p-2 bg-gray-50 rounded">
+                <span class="text-gray-600">Último Backup:</span>
+                <span class="font-semibold">2025-10-13 23:00</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="mt-6 flex space-x-4">
+        <button onclick="guardarConfiguracion()" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg transition-colors">
+            <i class="fas fa-save mr-2"></i>
+            Guardar Configuración
+        </button>
+        <button onclick="resetearConfiguracion()" class="flex-1 bg-gray-500 hover:bg-gray-600 text-white py-2 rounded-lg transition-colors">
+            <i class="fas fa-undo mr-2"></i>
+            Restablecer Valores
+        </button>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function guardarConfiguracion() {
+        mostrarNotificacion('Configuración guardada exitosamente', 'success');
+    }
+    
+    function resetearConfiguracion() {
+        if (confirm('¿Está seguro de restablecer la configuración a valores predeterminados?')) {
+            mostrarNotificacion('Configuración restablecida', 'info');
+        }
+    }
+</script>
+{% endblock %}
+
